@@ -1,4 +1,4 @@
-FROM python:buster
+FROM python:slim-buster
 
 RUN apt-get update -y
 RUN apt-get install tk -y
