@@ -8,3 +8,6 @@ services:
       - DISPLAY=${IP}:0
       - QT_X11_NO_MITSHM=1
     network_mode: host
+    deploy:
+      mode: replicated
+      replicas: 2
