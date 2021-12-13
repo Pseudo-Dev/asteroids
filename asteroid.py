@@ -1,4 +1,3 @@
-from math import sqrt
 from random import randint
 from graphics import Circle, Point
 
