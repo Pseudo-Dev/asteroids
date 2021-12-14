@@ -1,10 +1,10 @@
 from graphics import GraphWin, update
 from asteroid import Asteroid
 
-screenW = 400
-screenH = 300
-win = GraphWin("Node 1", screenW, screenH, autoflush=False)
-win.setCoords(0, 0, screenW*10, screenH*10)
+screenW = 4000
+screenH = 3000
+win = GraphWin("Node 1", screenW/10, screenH/10, autoflush=False)
+win.setCoords(0, 0, screenW, screenH)
 list = []
 
 while True:
@@ -17,7 +17,7 @@ while True:
         asteroid.circle.move(asteroid.dX, asteroid.dY)
         x = asteroid.circle.getCenter().getX()
         y = asteroid.circle.getCenter().getY()
-        if x <= 0 or y <=0 or x >= screenW * 10 or y >= screenH * 10:
+        if x <= 0 or y <=0 or x >= screenW or y >= screenH:
             asteroid.circle.undraw()
             list.remove(asteroid)
 
