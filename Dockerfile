@@ -1,7 +1,9 @@
 FROM python:slim-buster
+# FROM python:buster
 
 RUN apt-get update -y
-RUN apt-get install tk -y
+RUN apt-get --no-install-recommends install tk -y
+RUN apt-get --no-install-recommends install syslog-ng -y
 
 WORKDIR /usr/src/app
 
@@ -10,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./main.py" ]
+ENTRYPOINT [ "./start.sh" ]

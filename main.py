@@ -1,3 +1,4 @@
+from syslog import syslog, openlog
 from graphics import GraphWin, update
 from asteroid import Asteroid
 
@@ -6,6 +7,7 @@ screenH = 3000
 win = GraphWin("Node 1", screenW/10, screenH/10, autoflush=False)
 win.setCoords(0, 0, screenW, screenH)
 list = []
+openlog("asteroids")
 
 while True:
     if len(list) < 7:
@@ -20,6 +22,7 @@ while True:
         if x <= 0 or y <=0 or x >= screenW or y >= screenH:
             asteroid.circle.undraw()
             list.remove(asteroid)
+            syslog("Asteroid moved out of bounds")
 
     if win.checkMouse():
         break
