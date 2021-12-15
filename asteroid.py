@@ -2,7 +2,7 @@ from random import randint
 from graphics import Circle, Point
 
 
-color = ("red", "blue", "green", "yellow", "black", "white", "cyan", "purple")
+color = ("white", "yellow", "red", "blue", "green", "black", "cyan", "purple")
 
 
 class Asteroid:
@@ -14,5 +14,5 @@ class Asteroid:
         self.circle = Circle(loc, self.size)
         self.color = randint(0, 7)
         self.circle.setFill(color[self.color])
-        if self.color != 3 and self.color != 5:
+        if self.color >= 2:
             self.circle.setOutline(color[self.color])
