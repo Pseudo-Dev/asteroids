@@ -5,9 +5,11 @@ services:
     image: asteroids:latest
     build: .
     environment:
-      - DISPLAY=${IP}:0
+      - DISPLAY=host.docker.internal:0
       - QT_X11_NO_MITSHM=1
     network_mode: host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     deploy:
       mode: replicated
       replicas: 2
