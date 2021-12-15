@@ -12,7 +12,7 @@ class Asteroid:
         self.size = randint(50, 200)
         loc = Point(200 + randint(0, 3600), 200 + randint(0, 2600))
         self.circle = Circle(loc, self.size)
-        self.color = color[randint(0, 7)]
-        self.circle.setFill(self.color)
-        if self.color != "yellow" and self.color != "white":
-            self.circle.setOutline(self.color)
+        self.color = randint(0, 7)
+        self.circle.setFill(color[self.color])
+        if self.color != 3 and self.color != 5:
+            self.circle.setOutline(color[self.color])
