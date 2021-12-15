@@ -1,6 +1,7 @@
 from syslog import syslog, openlog
 from graphics import GraphWin, update
 from asteroid import Asteroid
+from remote.server import serve
 
 screenW = 4000
 screenH = 3000
@@ -8,6 +9,7 @@ win = GraphWin("Node 1", screenW/10, screenH/10, autoflush=False)
 win.setCoords(0, 0, screenW, screenH)
 list = []
 openlog("asteroids")
+serve()
 
 while True:
     if len(list) < 7:

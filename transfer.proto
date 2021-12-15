@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+service Transfer {
+  rpc Xfer(Outbound) returns (Success) {}
+}
+
+message Outbound {
+  int32 X = 1;
+  int32 Y = 2;
+  int32 dX = 3;
+  int32 dY = 4;
+  int32 size = 5;
+  int32 color = 6;
+}
+
+message Success {
+  bool result = 1;
+ }
