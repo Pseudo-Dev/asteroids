@@ -1,6 +1,6 @@
 # Asteroids networking
 
-To make the containers appear on your real network you will need to set up a Docker IPvLAN. The command is in *networking/network.sh*, but you will need to create a *.env* first to match your network. Place the *.env* file in asteroids/networking!. Mine looks like this:
+To make the containers appear on your real network you will need to set up a Docker IPvLAN. The command is in *networking/network.sh*, but you will need to create a *.env* first to match your network. Place the *.env* file at the root (not in */networking*)!. Mine looks like this:
 
     IP=172.16.0.247
     INTERFACE=enp0s31f6
