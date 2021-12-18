@@ -1,13 +1,21 @@
 # Asteroids networking
 
-To get containers on your real network you will need to set up a Docker IPvLAN. The command is in *network.sh*, but you will need to edit it first to match your network. Change all the addresses to match yours, probably 192.168.0.xxx.
+To get containers on your real network you will need to set up a Docker IPvLAN. The command is in *network.sh*, but you will need to create a *.env* first to match your network. Create the file at the root of the repo (not in ./networking)!. Mine looks like this:
 
-The *ip-range* is the range where Docker will assign IP addresses. DHCP is not used!! Docker will assign the addresses blindly, so pick a range that is not used by other devices on your network. xx.xx.xx.128/27 means that addresses 129 to 159 will be used starting from the lower bound.
+    IP=172.16.0.247       # X Server
+    INTERFACE=enp0s31f6   # Docker host interface
+    SUBNET=172.16.0.0/24
+    IPRANGE=172.16.0.128/28
+    GATEWAY=172.16.0.1
 
-The *parent* is the interface the host is connected to network. Use wired interface if available, but wireless should also work. Check the actual interface name with `ifconfig`.
+Change all addresses to match yours, probably 192.168.0.xxx.
+
+*IP* is the ip address of your X Server where you want to run the animation, probably the Docker host itself. All X traffic goes through the network so use an IP in the same network as your in your IPvLAN.
+
+You will also need to allow access to your X server from the network. The quickest way is `xhost +` which will disable all security. Use it in a trusted network only. Restore security with `xhost -`.
+
+The *IPRANGE* is the range where Docker will assign IP addresses. DHCP is not used!! Docker will assign the addresses blindly, so pick a range that is not used by other devices on your network. xx.xx.xx.128/28 means that addresses 129 to 142 will be used starting from the lower bound.
+
+*INTERFACE* is the interface the host is connected to network. Use wired interface if available, but wireless should also work. Check the actual interface name with `ifconfig`.
 
 *network.sh* will create a permanent network *ether* which you can eventually delete with ´docker network rm ether`.
-
-In addition you will need to set an environment variable IP with the ip address of your X Server, probably the Docker host itself. All X traffic goes through the network so use an IP in the same network as your in your IPvLAN. You can either `export IP=192.168.0.xxx` in every new shell session or create a file *.env* with text IP=IP=192.168.0.xxx in it.
-
-You will need to allow access to your X server from the network. The quickest way is `xhost +` which will disable all security. Use it in a trusted network only. Restore security with `xhost -`.

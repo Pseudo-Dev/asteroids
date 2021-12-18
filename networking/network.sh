@@ -1,8 +1,12 @@
-#! /bin/sh
+#! /bin/bash
+
+set -a
+source ../.env
+set+a
 
 docker network create -d ipvlan \
-                      --subnet=172.16.0.0/24 \
-                      --ip-range=172.16.0.128/27 \
-                      --gateway=172.16.0.1 \
-                      -o parent=eth0 \
+                      --subnet=$SUBNET \
+                      --ip-range=$IPRANGE \
+                      --gateway=$GATEWAY \
+                      -o parent=$INTERFACE \
                       ether
