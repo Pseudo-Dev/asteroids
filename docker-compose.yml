@@ -14,7 +14,7 @@ services:
       - syslog
     build: .
     environment:
-      - DISPLAY=172.16.0.247:0
+      - DISPLAY=${IP}:0
       - QT_X11_NO_MITSHM=1
     networks: 
       - ether
@@ -26,7 +26,7 @@ services:
       - syslog
     build: .
     environment:
-      - DISPLAY=172.16.0.247:0
+      - DISPLAY=${IP}:0
       - QT_X11_NO_MITSHM=1
     networks: 
       - ether
@@ -34,9 +34,3 @@ services:
 networks:
   ether:
     external: true
-    # driver: ipvlan
-    # driver_opts:
-    #   parent: eth0
-    # ipam:
-    #   config:
-    #     - subnet: 100.98.26.0/24
