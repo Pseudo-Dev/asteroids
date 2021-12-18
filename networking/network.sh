@@ -2,7 +2,7 @@
 
 cd "${0%/*}"
 set -a
-source .env
+source ../.env
 set +a
 
 docker network create -d ipvlan \
