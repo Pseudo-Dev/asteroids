@@ -4,19 +4,39 @@ services:
   syslog:
     image: balabit/syslog-ng:latest
     container_name: syslog
-    network_mode: host
+    networks: 
+      - ether
 
-  app:
+  app0:
     image: asteroids:latest
+    container_name: asteroids-0
     depends_on: 
       - syslog
     build: .
     environment:
-      - DISPLAY=host.docker.internal:0
+      - DISPLAY=172.16.0.247:0
       - QT_X11_NO_MITSHM=1
-    network_mode: host
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    deploy:
-      mode: replicated
-      replicas: 2
+    networks: 
+      - ether
+
+  app1:
+    image: asteroids:latest
+    container_name: asteroids-1
+    depends_on: 
+      - syslog
+    build: .
+    environment:
+      - DISPLAY=172.16.0.247:0
+      - QT_X11_NO_MITSHM=1
+    networks: 
+      - ether
+
+networks:
+  ether:
+    external: true
+    # driver: ipvlan
+    # driver_opts:
+    #   parent: eth0
+    # ipam:
+    #   config:
+    #     - subnet: 100.98.26.0/24

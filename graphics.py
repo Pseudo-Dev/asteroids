@@ -160,7 +160,7 @@ __version__ = "5.0"
 #     Added ability to set text atttributes.
 #     Added Entry boxes.
 
-import time, os, sys
+import time, os, sys, asyncio
 
 try:  # import as appropriate for 2.x vs. 3.x
    import tkinter as tk
@@ -197,6 +197,18 @@ def update(rate=None):
             _update_lasttime = now + pauseLength
         else:
             _update_lasttime = now
+
+    _root.update()
+
+async def asyncUpdate(rate=10):
+    global _update_lasttime
+    now = time.time()
+    pauseLength = 1/rate-(now-_update_lasttime)
+    if pauseLength > 0:
+        await asyncio.sleep(pauseLength)
+        _update_lasttime = now + pauseLength
+    else:
+        _update_lasttime = now
 
     _root.update()
 

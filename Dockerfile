@@ -1,5 +1,5 @@
-FROM python:slim-buster
-# FROM python:buster
+# FROM python:slim-buster
+FROM python:buster
 
 RUN apt-get update -y
 RUN apt-get --no-install-recommends install tk -y

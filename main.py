@@ -1,7 +1,9 @@
+import asyncio
 from syslog import syslog, openlog
-from graphics import GraphWin, update
+from graphics import GraphWin, asyncUpdate
 from asteroid import Asteroid
 from remote.server import serve
+# from remote.client import send
 
 screenW = 4000
 screenH = 3000
@@ -11,22 +13,27 @@ list = []
 openlog("asteroids")
 serve()
 
-while True:
-    if len(list) < 7:
-        new = Asteroid()
-        list.append(new)
-        new.circle.draw(win)
+async def main():
+    while True:
+        if len(list) < 7:
+            new = Asteroid()
+            list.append(new)
+            new.circle.draw(win)
 
-    for asteroid in list:
-        asteroid.circle.move(asteroid.dX, asteroid.dY)
-        x = asteroid.circle.getCenter().getX()
-        y = asteroid.circle.getCenter().getY()
-        if x <= 0 or y <=0 or x >= screenW or y >= screenH:
-            asteroid.circle.undraw()
-            list.remove(asteroid)
-            syslog("Asteroid moved out of bounds")
+        for asteroid in list:
+            asteroid.circle.move(asteroid.dX, asteroid.dY)
+            x = asteroid.circle.getCenter().getX()
+            y = asteroid.circle.getCenter().getY()
+            if x <= 0 or y <=0 or x >= screenW or y >= screenH:
+                asteroid.circle.undraw()
+                list.remove(asteroid)
+                syslog("Asteroid moved out of bounds")
+                # send()
 
-    if win.checkMouse():
-        break
+        if win.checkMouse():
+            break
 
-    update(10)  # Frames per second
+        await asyncUpdate(10)  # Frames per second
+
+
+asyncio.run(main())
