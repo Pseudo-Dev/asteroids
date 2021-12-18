@@ -2,8 +2,8 @@
 
 To make the containers appear on your real network you will need to set up a Docker IPvLAN. The command is in *networking/network.sh*, but you will need to create a *.env* first to match your network. Place the *.env* file in asteroids/networking!. Mine looks like this:
 
-    IP=172.16.0.247       # X Server
-    INTERFACE=enp0s31f6   # Docker host interface
+    IP=172.16.0.247
+    INTERFACE=enp0s31f6
     SUBNET=172.16.0.0/24
     IPRANGE=172.16.0.128/28
     GATEWAY=172.16.0.1
