@@ -1,6 +1,6 @@
 # Multi-screen distributed Asteroids app
 
-- Set up your [networking](https:tree/main/networking)
+- Set up your networking (see subfolder *networking*)
 - To (re)build the Docker image use `docker build . -t asteroids`
 - Set the number of replicas by duplicating the app section in *docker-compose.yml*
 - Run the system by `docker-compose up`
