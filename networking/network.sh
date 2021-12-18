@@ -1,8 +1,9 @@
 #! /bin/bash
 
+cd "${0%/*}"
 set -a
-source ../.env
-set+a
+source .env
+set +a
 
 docker network create -d ipvlan \
                       --subnet=$SUBNET \
