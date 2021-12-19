@@ -38,10 +38,9 @@ async def main():
                 list.remove(asteroid)
                 syslog("Asteroid moved out of bounds")
                 if nodeID == 1 and x >= screenW:
-                    send(asteroid, 1)
+                    asyncio.create_task(send(asteroid, 1))
                 if nodeID == 2 and x <= 0:
-                    send(asteroid, 2)
-
+                    asyncio.create_task(send(asteroid, 2))
 
         if win.checkMouse():
             break
