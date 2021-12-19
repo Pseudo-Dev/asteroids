@@ -16,8 +16,10 @@ def get_id():
         IP = '127.0.0.1'
     finally:
         s.close()
-    id = IP.split(".")[3] - 128
-    return id
+    num = IP.split(".")[3]
+    print(num)
+    num -= 128
+    return num
 
 
 async def send():
