@@ -3,7 +3,7 @@ from syslog import syslog, openlog
 from graphics import GraphWin, asyncUpdate
 from asteroid import Asteroid
 from remote.server import serve
-# from remote.client import send
+from remote.client import send, get_ip
 
 screenW = 4000
 screenH = 3000
@@ -12,6 +12,9 @@ win.setCoords(0, 0, screenW, screenH)
 list = []
 openlog("asteroids")
 serve()
+print("######## IP #########")
+print(get_ip())
+
 
 async def main():
     while True:
@@ -37,3 +40,4 @@ async def main():
 
 
 asyncio.run(main())
+print("Kukkuu")
