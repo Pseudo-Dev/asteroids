@@ -17,8 +17,7 @@ def get_id():
     finally:
         s.close()
     num = IP.split(".")[3]
-    print(num)
-    num -= 128
+    num = int(num) - 128
     return num
 
 
