@@ -6,7 +6,7 @@ import remote.transfer_pb2 as pb2
 import remote.transfer_pb2_grpc as pb2g
 
 
-def get_ip():
+def get_id():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't even have to be reachable
@@ -16,7 +16,8 @@ def get_ip():
         IP = '127.0.0.1'
     finally:
         s.close()
-    return IP
+    id = IP.split(".")[3] - 128
+    return id
 
 
 async def send():

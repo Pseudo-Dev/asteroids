@@ -1,14 +1,22 @@
 import asyncio
 from syslog import syslog, openlog
-from graphics import GraphWin, asyncUpdate
+from graphics import GraphWin, Text, Point, asyncUpdate
 from asteroid import Asteroid
 from remote.server import serve
-from remote.client import send, get_ip
+from remote.client import send, get_id
 
+# Set up graphics canvas
 screenW = 4000
 screenH = 3000
-win = GraphWin("Node 1", screenW/10, screenH/10, autoflush=False)
+nodeID = get_id()
+win = GraphWin(f'Node {nodeID}', screenW/10, screenH/10, autoflush=False)
 win.setCoords(0, 0, screenW, screenH)
+nodeTxt = Text(Point(2000, 1500), nodeID)
+nodeTxt.setTextColor("white")
+nodeTxt.setSize(36)
+nodeTxt.draw()
+
+# Initialize app
 list = []
 openlog("asteroids")
 serve()
@@ -36,7 +44,5 @@ async def main():
 
         await asyncUpdate(10)  # Frames per second
 
-print("######## IP #########")
-print(get_ip())
 
 asyncio.run(main())
