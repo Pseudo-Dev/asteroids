@@ -15,5 +15,6 @@ class Transfer(pb2g.TransferServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2g.add_TransferServicer_to_server(Transfer(), server)
-    server.add_insecure_port('[::]:50505')
+    server.add_insecure_port('0.0.0.0:50505')
     server.start()
+    return server

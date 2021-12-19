@@ -23,10 +23,11 @@ def get_id():
 
 async def send(asteroid, target):
     targetIP = "172.16.0." + str(target + 128)
+    print(f"Tavoitellaan {targetIP}")
     async with aio.insecure_channel(f'{targetIP}:50505') as channel:
         stub = pb2g.TransferStub(channel)
         try:
             response = await stub.Xfer(pb2.Outbound(X=100, Y=100), timeout=10)
-            print("Xfer client received: " + response.message)
+            print("Xfer client received: " + str(response.result))
         except Exception as e:
-            print("######## POIKKEUS: " + str(e.code()))
+            print("######## POIKKEUS: " + str(e))

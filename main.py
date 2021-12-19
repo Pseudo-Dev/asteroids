@@ -19,7 +19,7 @@ nodeTxt.draw(win)
 # Initialize app
 list = []
 openlog("asteroids")
-serve()
+server = serve()
 
 
 async def main():
@@ -38,9 +38,11 @@ async def main():
                 list.remove(asteroid)
                 syslog("Asteroid moved out of bounds")
                 if nodeID == 1 and x >= screenW:
-                    asyncio.create_task(send(asteroid, 1))
-                if nodeID == 2 and x <= 0:
+                    print("####### Oikealle")
                     asyncio.create_task(send(asteroid, 2))
+                if nodeID == 2 and x <= 0:
+                    print("####### Vasemmalle")
+                    asyncio.create_task(send(asteroid, 1))
 
         if win.checkMouse():
             break
