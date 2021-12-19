@@ -37,7 +37,11 @@ async def main():
                 asteroid.circle.undraw()
                 list.remove(asteroid)
                 syslog("Asteroid moved out of bounds")
-                # send()
+                if nodeID == 1 and x >= screenW:
+                    send(asteroid, 1)
+                if nodeID == 2 and x <= 0:
+                    send(asteroid, 2)
+
 
         if win.checkMouse():
             break
