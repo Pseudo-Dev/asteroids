@@ -19,10 +19,6 @@ def get_ip():
     return IP
 
 
-print("######## IP #########")
-print(get_ip())
-
-
 async def send():
     async with aio.insecure_channel('localhost:50505') as channel:
         stub = pb2g.TransferStub(channel)
