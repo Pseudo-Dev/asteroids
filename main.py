@@ -12,8 +12,6 @@ win.setCoords(0, 0, screenW, screenH)
 list = []
 openlog("asteroids")
 serve()
-print("######## IP #########")
-print(get_ip())
 
 
 async def main():
@@ -38,5 +36,7 @@ async def main():
 
         await asyncUpdate(10)  # Frames per second
 
+print("######## IP #########")
+print(get_ip())
 
 asyncio.run(main())
