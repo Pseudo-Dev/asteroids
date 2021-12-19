@@ -22,7 +22,7 @@ def get_id():
 
 
 async def send(asteroid, target):
-    targetIP = "172.16.0." + (target + 128)
+    targetIP = "172.16.0." + str(target + 128)
     async with aio.insecure_channel(f'{targetIP}:50505') as channel:
         stub = pb2g.TransferStub(channel)
         try:
