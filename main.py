@@ -14,7 +14,7 @@ win.setCoords(0, 0, screenW, screenH)
 nodeTxt = Text(Point(2000, 1500), nodeID)
 nodeTxt.setTextColor("white")
 nodeTxt.setSize(36)
-nodeTxt.draw()
+nodeTxt.draw(win)
 
 # Initialize app
 list = []
