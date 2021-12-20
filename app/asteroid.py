@@ -1,5 +1,6 @@
 from random import randint
-from graphics import Circle, Point
+
+from .graphics import Circle, Point
 
 
 color = ("white", "yellow", "red", "blue", "green", "black", "cyan", "purple")

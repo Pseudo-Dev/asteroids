@@ -1,25 +1,26 @@
 import asyncio
-from syslog import syslog, openlog
-from graphics import GraphWin, Text, Point, asyncUpdate
-from asteroid import Asteroid
+import syslog
+
+from app.graphics import GraphWin, Text, Point, asyncUpdate
+from app.asteroid import Asteroid
 from remote.server import serve
 from remote.client import send, get_id
 
 # Set up graphics canvas
 screenW = 4000
 screenH = 3000
-nodeID = get_id()
-win = GraphWin(f'Node {nodeID}', screenW/10, screenH/10, autoflush=False)
+my = get_id()
+win = GraphWin(my.ip, screenW/10, screenH/10, autoflush=False)
 win.setCoords(0, 0, screenW, screenH)
-nodeTxt = Text(Point(2000, 1500), nodeID)
+nodeTxt = Text(Point(2000, 1500), my.id)
 nodeTxt.setTextColor("white")
 nodeTxt.setSize(36)
 nodeTxt.draw(win)
 
 # Initialize app
 list = []
-openlog("asteroids")
-server = serve()
+syslog.openlog("asteroids")
+server = serve(my, list)
 
 
 async def main():
@@ -36,11 +37,11 @@ async def main():
             if x <= 0 or y <=0 or x >= screenW or y >= screenH:
                 asteroid.circle.undraw()
                 list.remove(asteroid)
-                syslog("Asteroid moved out of bounds")
-                if nodeID == 1 and x >= screenW:
+                syslog.syslog("Asteroid moved out of bounds")
+                if my.id == 1 and x >= screenW:
                     print("####### Oikealle")
                     asyncio.create_task(send(asteroid, 2))
-                if nodeID == 2 and x <= 0:
+                if my.id == 2 and x <= 0:
                     print("####### Vasemmalle")
                     asyncio.create_task(send(asteroid, 1))
 

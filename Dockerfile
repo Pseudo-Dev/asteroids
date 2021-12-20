@@ -5,7 +5,7 @@ RUN apt-get update -y
 RUN apt-get --no-install-recommends install tk -y
 RUN apt-get --no-install-recommends install syslog-ng -y
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
