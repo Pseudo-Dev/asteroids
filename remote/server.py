@@ -1,11 +1,11 @@
 from concurrent import futures
 
 import grpc
-import remote.transfer_pb2 as pb2
-import remote.transfer_pb2_grpc as pb2g
+import remote.asteroids_pb2 as pb2
+import remote.asteroids_pb2_grpc as pb2g
 
 
-class Transfer(pb2g.TransferServicer):
+class AsteroidsRPC(pb2g.AsteroidsServicer):
 
     def Xfer(self, request, context):
         print("Received a MESSAGE!")
@@ -14,7 +14,7 @@ class Transfer(pb2g.TransferServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    pb2g.add_TransferServicer_to_server(Transfer(), server)
+    pb2g.add_AsteroidsServicer_to_server(AsteroidsRPC(), server)
     server.add_insecure_port('0.0.0.0:50505')
     server.start()
     return server

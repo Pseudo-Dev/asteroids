@@ -1,8 +1,14 @@
 syntax = "proto3";
 
-service Transfer {
+service Asteroids {
+  rpc Discover(Peer) returns (Peer) {}
   rpc Xfer(Outbound) returns (Success) {}
 }
+
+message Peer {
+  int32 id = 1;
+  string ip = 2;
+ }
 
 message Outbound {
   int32 X = 1;
