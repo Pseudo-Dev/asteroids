@@ -18,7 +18,7 @@ def get_id():
         s.close()
     num = IP.split(".")[3]
     num = int(num) - 128
-    return num
+    return pb2.Peer(id=num, ip=IP)
 
 
 async def send(asteroid, target):
@@ -28,6 +28,6 @@ async def send(asteroid, target):
         stub = pb2g.AsteroidsStub(channel)
         try:
             response = await stub.Xfer(pb2.Outbound(X=100, Y=100), timeout=10)
-            print("Xfer client received: " + str(response.result))
+            # print("Xfer client received: " + str(response.result))
         except Exception as e:
             print("######## POIKKEUS: " + str(e))
