@@ -48,7 +48,7 @@ def discover(me):
 
 
 async def send(asteroid, target):
-    targetIP = "172.16.0." + str(target + 128)
+    targetIP = peerDict[target]
     out = pb2.Outbound(X=int(asteroid.circle.getCenter().getX()),
                        Y=int(asteroid.circle.getCenter().getY()),
                        dX=asteroid.dX,
