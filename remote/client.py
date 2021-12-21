@@ -1,9 +1,12 @@
 # import asyncio
 import socket
-from grpc import aio
+from grpc import aio, insecure_channel, RpcError, StatusCode
 
 import remote.asteroids_pb2 as pb2
 import remote.asteroids_pb2_grpc as pb2g
+
+
+peerDict = {}
 
 
 def get_id():
@@ -21,13 +24,41 @@ def get_id():
     return pb2.Peer(id=num, ip=IP)
 
 
+def discover(me):
+    for i in range(128, 143):
+        ip = "172.16.0." + str(i)
+        if ip == me.ip:
+            continue
+        with insecure_channel(f'{ip}:50505') as channel:
+            stub = pb2g.AsteroidsStub(channel)
+            try:
+                remote = stub.Discover(me, timeout=1)
+            except RpcError as rpc_error:
+                if rpc_error.code() in (StatusCode.CANCELLED,
+                                        StatusCode.UNAVAILABLE,
+                                        StatusCode.DEADLINE_EXCEEDED):
+                    pass
+                else:
+                    print(f"#### Unknown RPC error: code={rpc_error.code()}")
+                    print(f"message={rpc_error.details()}")
+            else:
+                if remote:
+                    peerDict[remote.id] = remote.ip
+                    # print(f'Client added {remote.id}: {remote.ip}')
+
+
 async def send(asteroid, target):
     targetIP = "172.16.0." + str(target + 128)
-    print(f"Tavoitellaan {targetIP}")
+    out = pb2.Outbound(X=int(asteroid.circle.getCenter().getX()),
+                       Y=int(asteroid.circle.getCenter().getY()),
+                       dX=asteroid.dX,
+                       dY=asteroid.dY,
+                       size=asteroid.size,
+                       color=asteroid.color)
     async with aio.insecure_channel(f'{targetIP}:50505') as channel:
         stub = pb2g.AsteroidsStub(channel)
         try:
-            response = await stub.Xfer(pb2.Outbound(X=100, Y=100), timeout=10)
+            response = await stub.Xfer(out, timeout=10)
             # print("Xfer client received: " + str(response.result))
         except Exception as e:
             print("######## POIKKEUS: " + str(e))

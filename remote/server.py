@@ -3,26 +3,31 @@ from concurrent import futures
 import grpc
 import remote.asteroids_pb2 as pb2
 import remote.asteroids_pb2_grpc as pb2g
-
-myID = None
-asteroidList = []
-peerList = []
+from remote.client import peerDict
+from app.asteroid import Asteroid, asteroidList
 
 
 class AsteroidsRPC(pb2g.AsteroidsServicer):
 
     def Discover(self, request, context):
-        peerList[request.id] = request.ip
-        print(f'Added {request.id} {request.ip}')
-        return pb2.Peer(myID)
+        peerDict[request.id] = request.ip
+        # print(f'Server added {request.id}: {request.ip}')
+        return myID
 
     def Xfer(self, request, context):
-        # print("Received a MESSAGE!")
+        new = (Asteroid(X=request.X,
+                        Y=request.Y,
+                        dX=request.dX,
+                        dY=request.dY,
+                        size=request.size,
+                        clr=request.color))
+        asteroidList.append(new)
         return pb2.Success(result=True)
 
 
-def serve(id, list):
-    global myID, asteroidList
+def serve(id, list, win):
+    global myID, asteroidList, canvas
+    canvas = win
     myID = id
     asteroidList = list
 

@@ -1,51 +1,45 @@
 import asyncio
 import syslog
 
-from app.graphics import GraphWin, Text, Point, asyncUpdate
-from app.asteroid import Asteroid
+from app.graphics import asyncUpdate
+from app.asteroid import Asteroid, asteroidList
+from app.canvas import init, screenW, screenH
 from remote.server import serve
-from remote.client import send, get_id
+from remote.client import send, get_id, discover
 
-# Set up graphics canvas
-screenW = 4000
-screenH = 3000
-my = get_id()
-win = GraphWin(my.ip, screenW/10, screenH/10, autoflush=False)
-win.setCoords(0, 0, screenW, screenH)
-nodeTxt = Text(Point(2000, 1500), my.id)
-nodeTxt.setTextColor("white")
-nodeTxt.setSize(36)
-nodeTxt.draw(win)
 
 # Initialize app
-list = []
+my = get_id()
+canvas = init(my)
 syslog.openlog("asteroids")
-server = serve(my, list)
+server = serve(my, asteroidList, canvas)
+discover(my)
 
 
 async def main():
     while True:
-        if len(list) < 7:
-            new = Asteroid()
-            list.append(new)
-            new.circle.draw(win)
+        if len(asteroidList) < 6:
+            asteroidList.append(Asteroid())
 
-        for asteroid in list:
+        for asteroid in asteroidList:
+            if asteroid.new:
+                asteroid.circle.draw(canvas)
+                asteroid.new = False
             asteroid.circle.move(asteroid.dX, asteroid.dY)
             x = asteroid.circle.getCenter().getX()
             y = asteroid.circle.getCenter().getY()
             if x <= 0 or y <=0 or x >= screenW or y >= screenH:
                 asteroid.circle.undraw()
-                list.remove(asteroid)
+                asteroidList.remove(asteroid)
                 syslog.syslog("Asteroid moved out of bounds")
                 if my.id == 1 and x >= screenW:
-                    print("####### Oikealle")
+                    asteroid.circle.move(-screenW, 0)
                     asyncio.create_task(send(asteroid, 2))
                 if my.id == 2 and x <= 0:
-                    print("####### Vasemmalle")
+                    asteroid.circle.move(screenW, 0)
                     asyncio.create_task(send(asteroid, 1))
 
-        if win.checkMouse():
+        if canvas.checkMouse():
             break
 
         await asyncUpdate(10)  # Frames per second
