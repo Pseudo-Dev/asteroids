@@ -19,3 +19,7 @@ You will also need to allow access to your X server from the network. The quicke
 The *IPRANGE* is the range where Docker will assign IP addresses. DHCP is not used!! Docker will assign the addresses blindly, so pick a range that is not used by other devices on your network. xx.xx.xx.128/28 means that addresses 128 to 143 will be used starting from the lower bound.
 
 *network.sh* will create a permanent Docker network *ether* so you will only do this once. You can delete the network afterwards with ´docker network rm ether`.
+
+## Python configuration
+
+You will also need to make a similar configuration in *remote/config.py*.

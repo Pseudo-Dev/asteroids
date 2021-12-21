@@ -4,6 +4,7 @@ from grpc import aio, insecure_channel, RpcError, StatusCode
 
 import remote.asteroids_pb2 as pb2
 import remote.asteroids_pb2_grpc as pb2g
+import remote.config as config
 
 
 peerDict = {}
@@ -20,13 +21,13 @@ def get_id():
     finally:
         s.close()
     num = IP.split(".")[3]
-    num = int(num) - 128
+    num = int(num) - config.first + 1
     return pb2.Peer(id=num, ip=IP)
 
 
 def discover(me):
-    for i in range(128, 143):
-        ip = "172.16.0." + str(i)
+    for i in range(config.first, config.last):
+        ip = config.netBase + str(i)
         if ip == me.ip:
             continue
         with insecure_channel(f'{ip}:50505') as channel:
@@ -58,7 +59,6 @@ async def send(asteroid, target):
     async with aio.insecure_channel(f'{targetIP}:50505') as channel:
         stub = pb2g.AsteroidsStub(channel)
         try:
-            response = await stub.Xfer(out, timeout=10)
-            # print("Xfer client received: " + str(response.result))
+            await stub.Xfer(out, timeout=10)
         except Exception as e:
             print("######## POIKKEUS: " + str(e))

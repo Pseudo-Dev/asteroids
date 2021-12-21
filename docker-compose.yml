@@ -1,17 +1,17 @@
 version: "3"
 
 services:
-  syslog:
-    image: balabit/syslog-ng:latest
-    container_name: syslog
-    networks: 
-      - ether
+  # syslog:
+  #   image: balabit/syslog-ng:latest
+  #   container_name: syslog
+  #   networks: 
+  #     - ether
 
   app0:
     image: asteroids:latest
     container_name: asteroids-0
-    depends_on: 
-      - syslog
+    # depends_on: 
+      # - syslog
     build: .
     environment:
       - DISPLAY=${IP}:0
@@ -22,8 +22,8 @@ services:
   app1:
     image: asteroids:latest
     container_name: asteroids-1
-    depends_on: 
-      - syslog
+    # depends_on: 
+      # - syslog
     build: .
     environment:
       - DISPLAY=${IP}:0
