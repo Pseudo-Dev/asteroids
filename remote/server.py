@@ -11,7 +11,7 @@ class AsteroidsRPC(pb2g.AsteroidsServicer):
 
     def Discover(self, request, context):
         peerDict[request.id] = request.ip
-        # print(f'Server added {request.id}: {request.ip}')
+        print(f'Peer {request.id} at {request.ip} discovered me')
         return myID
 
     def Xfer(self, request, context):

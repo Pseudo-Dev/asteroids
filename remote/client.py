@@ -1,4 +1,4 @@
-# import asyncio
+import asyncio
 import socket
 from grpc import aio, insecure_channel, RpcError, StatusCode
 
@@ -25,27 +25,23 @@ def get_id():
     return pb2.Peer(id=num, ip=IP)
 
 
-def discover(me):
+async def discovery(me):
+
+    async def announce(me, ip):
+        async with aio.insecure_channel(f'{ip}:50505') as channel:
+            return await pb2g.AsteroidsStub(channel).Discover(me, timeout=2)
+
+    reqs = []
     for i in range(config.first, config.last):
         ip = config.netBase + str(i)
         if ip == me.ip:
             continue
-        with insecure_channel(f'{ip}:50505') as channel:
-            stub = pb2g.AsteroidsStub(channel)
-            try:
-                remote = stub.Discover(me, timeout=1)
-            except RpcError as rpc_error:
-                if rpc_error.code() in (StatusCode.CANCELLED,
-                                        StatusCode.UNAVAILABLE,
-                                        StatusCode.DEADLINE_EXCEEDED):
-                    pass
-                else:
-                    print(f"#### Unknown RPC error: code={rpc_error.code()}")
-                    print(f"message={rpc_error.details()}")
-            else:
-                if remote:
-                    peerDict[remote.id] = remote.ip
-                    # print(f'Client added {remote.id}: {remote.ip}')
+        reqs.append(announce(me, ip))
+    peers = await asyncio.gather(*reqs, return_exceptions=True)
+    for peer in peers:
+        if not isinstance(peer, BaseException):
+            peerDict[peer.id] = peer.ip
+            print(f'Discovered peer {peer.id} at {peer.ip}')
 
 
 async def send(asteroid, target):

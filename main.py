@@ -5,7 +5,7 @@ from app.graphics import asyncUpdate
 from app.asteroid import Asteroid, asteroidList
 from app.canvas import init, screenW, screenH
 from remote.server import serve
-from remote.client import send, get_id, discover
+from remote.client import send, get_id, discovery
 
 
 # Initialize app
@@ -13,7 +13,7 @@ my = get_id()
 canvas = init(my)
 syslog.openlog("asteroids")
 server = serve(my, asteroidList, canvas)
-discover(my)
+asyncio.run(discovery(my))
 
 
 async def main():
