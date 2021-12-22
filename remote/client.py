@@ -64,7 +64,7 @@ async def send(asteroid, targetList):
                 await stub.Xfer(out, timeout=1)
             except Exception:   # RpcError:
                 if target in peerDict:
-                    print(f"Peer {target} at {targetIP} lost")
+                    print(f"### Peer {target} at {targetIP} lost")
                     del peerDict[target]
             else:
                 break
