@@ -1,6 +1,6 @@
 import asyncio
 import socket
-from grpc import aio, insecure_channel, RpcError, StatusCode
+from grpc import aio
 
 import remote.asteroids_pb2 as pb2
 import remote.asteroids_pb2_grpc as pb2g
