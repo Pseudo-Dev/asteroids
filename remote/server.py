@@ -9,6 +9,8 @@ from app.asteroid import Asteroid, asteroidList
 
 class AsteroidsRPC(pb2g.AsteroidsServicer):
 
+    # These implement the protocols from asteroids.proto
+
     def Discover(self, request, context):
         peerDict[request.id] = request.ip
         print(f'Peer {request.id} at {request.ip} discovered me')
@@ -34,5 +36,5 @@ def serve(id, list):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2g.add_AsteroidsServicer_to_server(AsteroidsRPC(), server)
     server.add_insecure_port('0.0.0.0:50505')   # TCP port 50505
-    server.start()
+    server.start()      # Starts a new thread and returns
     return server

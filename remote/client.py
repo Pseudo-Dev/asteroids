@@ -34,9 +34,9 @@ async def discovery(me):
     reqs = []
     for i in range(config.first, config.last):
         ip = config.netBase + str(i)
-        if ip == me.ip:
+        if ip == me.ip:     # Don't send to self
             continue
-        reqs.append(announce(me, ip))
+        reqs.append(announce(me, ip))   # Collect all announcement requests
     peers = await asyncio.gather(*reqs, return_exceptions=True)
     for peer in peers:
         if not isinstance(peer, BaseException):
