@@ -1,6 +1,7 @@
 gridWidth = 3
 gridHeight = 3
 
+# All functions return a list of nodes in that direction
 
 def up(node):
     result = []

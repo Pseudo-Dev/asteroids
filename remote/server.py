@@ -26,14 +26,13 @@ class AsteroidsRPC(pb2g.AsteroidsServicer):
         return pb2.Success(result=True)
 
 
-def serve(id, list, win):
-    global myID, asteroidList, canvas
-    canvas = win
+def serve(id, list):
+    global myID, asteroidList   # The only way to pass these to the server
     myID = id
     asteroidList = list
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2g.add_AsteroidsServicer_to_server(AsteroidsRPC(), server)
-    server.add_insecure_port('0.0.0.0:50505')
+    server.add_insecure_port('0.0.0.0:50505')   # TCP port 50505
     server.start()
     return server

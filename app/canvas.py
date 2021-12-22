@@ -2,7 +2,7 @@ from app.graphics import GraphWin, Text, Point
 
 screenW = 4000
 screenH = 3000
-win = None
+# win = None
 
 
 def init(my):

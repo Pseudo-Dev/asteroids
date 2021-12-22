@@ -10,12 +10,12 @@ asteroidList = []
 class Asteroid:
     def __init__(self, X=0, Y=0, dX=0, dY=0, size=0, clr=0):
         self.new = True
-        if dX or dY:
+        if dX or dY:    # This is coming from another node
             self.dX = dX
             self.dY = dY
             self.size = size
             self.color = clr
-        else:
+        else:           # New asteroid instance
             self.dX = randint(-50, 50)
             self.dY = randint(-50, 50)
             self.size = randint(50, 200)

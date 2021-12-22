@@ -10,7 +10,7 @@ import remote.config as config
 peerDict = {}
 
 
-def get_id():
+def get_id():      # Get the IP address of the interface to the gateway
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't have to be reachable
@@ -45,7 +45,7 @@ async def discovery(me):
 
 
 async def send(asteroid, targetList):
-    if not targetList:
+    if not targetList:      # Outside of the nodes
         return
     out = pb2.Outbound(X=int(asteroid.circle.getCenter().getX()),
                        Y=int(asteroid.circle.getCenter().getY()),
@@ -54,7 +54,7 @@ async def send(asteroid, targetList):
                        size=asteroid.size,
                        color=asteroid.color)
     for target in targetList:
-        if target not in peerDict:
+        if target not in peerDict:      # The node has died meanwhile
             continue
         targetIP = peerDict[target]
         async with aio.insecure_channel(f'{targetIP}:50505') as channel:
@@ -62,7 +62,7 @@ async def send(asteroid, targetList):
             try:
                 print(f"Send to: {targetIP}")
                 await stub.Xfer(out, timeout=1)
-            except Exception:   # RpcError:
+            except Exception:   # RpcError
                 if target in peerDict:
                     print(f"### Peer {target} at {targetIP} lost")
                     del peerDict[target]
