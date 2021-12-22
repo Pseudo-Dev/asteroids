@@ -1,4 +1,4 @@
-gridWidth = 2
+gridWidth = 3
 gridHeight = 3
 
 
