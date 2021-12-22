@@ -19,7 +19,7 @@ asyncio.run(discovery(my))
 
 async def main():
     while True:
-        if len(asteroidList) < 6:
+        if len(asteroidList) < 5:
             asteroidList.append(Asteroid())
 
         for asteroid in asteroidList:
