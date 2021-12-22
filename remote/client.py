@@ -44,17 +44,20 @@ async def discovery(me):
             print(f'Discovered peer {peer.id} at {peer.ip}')
 
 
-async def send(asteroid, target):
-    targetIP = peerDict[target]
+async def send(asteroid, targetList):
+    if not targetList:
+        return
     out = pb2.Outbound(X=int(asteroid.circle.getCenter().getX()),
                        Y=int(asteroid.circle.getCenter().getY()),
                        dX=asteroid.dX,
                        dY=asteroid.dY,
                        size=asteroid.size,
                        color=asteroid.color)
+    targetIP = peerDict[targetList[0]]
     async with aio.insecure_channel(f'{targetIP}:50505') as channel:
         stub = pb2g.AsteroidsStub(channel)
         try:
+            print(f"Target: {targetIP}")
             await stub.Xfer(out, timeout=10)
         except Exception as e:
             print("######## POIKKEUS: " + str(e))

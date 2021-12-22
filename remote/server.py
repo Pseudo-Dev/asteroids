@@ -15,6 +15,7 @@ class AsteroidsRPC(pb2g.AsteroidsServicer):
         return myID
 
     def Xfer(self, request, context):
+        print("Received one from " + context.peer())
         new = (Asteroid(X=request.X,
                         Y=request.Y,
                         dX=request.dX,
