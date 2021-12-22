@@ -14,7 +14,7 @@ Change all addresses to match your network, probably 192.168.0.xxx.
 
 You will also need to allow access to your X server from the network. The quickest way is `xhost +` which will disable all security. Use it in a trusted network only. (Restore security with `xhost -`.)
 
-*INTERFACE* is the interface the host is connected to network. Use wired interface if available, but wireless should also work. Check the actual interface name with `ifconfig`.
+*INTERFACE* is the name of the interface the host is connected to network. Use wired interface if available, but wireless should also work. Check the actual interface name with `ifconfig`.
 
 The *IPRANGE* is the range where Docker will assign IP addresses. DHCP is not used!! Docker will assign the addresses blindly, so pick a range that is not used by other devices on your network. xx.xx.xx.128/28 means that addresses 128 to 143 will be used starting from the lower bound.
 
