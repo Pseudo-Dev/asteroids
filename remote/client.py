@@ -45,7 +45,7 @@ async def discovery(me):
 
 
 async def send(asteroid, targetList):
-    if not targetList:      # Outside of the nodes
+    if not targetList:      # Going outside of the nodes
         return
     out = pb2.Outbound(X=int(asteroid.circle.getCenter().getX()),
                        Y=int(asteroid.circle.getCenter().getY()),
