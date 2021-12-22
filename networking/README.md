@@ -10,9 +10,9 @@ To make the containers appear on your real network you will need to set up a Doc
 
 Change all addresses to match your network, probably 192.168.0.xxx.
 
-*IP* is the ip address of your X Server where you want to run the animation, probably the Docker host itself. All X traffic goes through the network so use an IP in the same network as your IPvLAN.
+*IP* is the ip address of your X Server where you want to show the animation, probably the Docker host itself. All X traffic goes through the network so it is better to use an IP in the same network as your IPvLAN.
 
-You will also need to allow access to your X server from the network. The quickest way is `xhost +` which will disable all security. Use it in a trusted network only. Restore security with `xhost -`.
+You will also need to allow access to your X server from the network. The quickest way is `xhost +` which will disable all security. Use it in a trusted network only. (Restore security with `xhost -`.)
 
 *INTERFACE* is the interface the host is connected to network. Use wired interface if available, but wireless should also work. Check the actual interface name with `ifconfig`.
 
