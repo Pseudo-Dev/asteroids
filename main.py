@@ -37,17 +37,17 @@ async def main():
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(screenW, 0)
                 asyncio.create_task(send(asteroid, left(my.id)))
-            if y < 0:
+            elif y < 0:
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(0, screenH)
                 asyncio.create_task(send(asteroid, up(my.id)))
-            if x > screenW:
+            elif x > screenW:
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(-screenW, 0)
                 asyncio.create_task(send(asteroid, right(my.id)))
-            if y > screenH:
+            elif y > screenH:
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(0, -screenH)
