@@ -1,8 +1,8 @@
 from remote.client import peerDict
 
 
-gridW = 2
-gridH = 2
+gridW = 1
+gridH = 3
 
 
 def up(node):

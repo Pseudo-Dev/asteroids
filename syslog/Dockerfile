@@ -1,5 +1,5 @@
-# FROM python:slim-buster
-FROM python:buster
+FROM python:slim-buster
+# FROM python:buster
 
 RUN apt-get update -y
 RUN apt-get --no-install-recommends install tk -y
@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT [ "./start.sh" ]
+ENTRYPOINT [ "python", "main.py" ]

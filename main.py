@@ -41,7 +41,7 @@ async def main():
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(0, screenH)
-                asyncio.create_task(send(asteroid, up(my.id)))
+                asyncio.create_task(send(asteroid, down(my.id)))
             elif x > screenW:
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
@@ -51,7 +51,7 @@ async def main():
                 asteroid.circle.undraw()
                 asteroidList.remove(asteroid)
                 asteroid.circle.move(0, -screenH)
-                asyncio.create_task(send(asteroid, down(my.id)))
+                asyncio.create_task(send(asteroid, up(my.id)))
 
         # Stop if mouse is pressed
         if canvas.checkMouse():

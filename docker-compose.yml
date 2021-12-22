@@ -1,17 +1,9 @@
 version: "3"
 
 services:
-  # syslog:
-  #   image: balabit/syslog-ng:latest
-  #   container_name: syslog
-  #   networks: 
-  #     - ether
-
   app0:
     image: asteroids:latest
     container_name: asteroids-0
-    # depends_on: 
-      # - syslog
     build: .
     environment:
       - DISPLAY=${IP}:0
@@ -22,14 +14,84 @@ services:
   app1:
     image: asteroids:latest
     container_name: asteroids-1
-    # depends_on: 
-      # - syslog
     build: .
     environment:
       - DISPLAY=${IP}:0
       - QT_X11_NO_MITSHM=1
     networks: 
       - ether
+
+  app2:
+    image: asteroids:latest
+    container_name: asteroids-2
+    build: .
+    environment:
+      - DISPLAY=${IP}:0
+      - QT_X11_NO_MITSHM=1
+    networks: 
+      - ether
+
+  # app3:
+  #   image: asteroids:latest
+  #   container_name: asteroids-3
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
+
+  # app4:
+  #   image: asteroids:latest
+  #   container_name: asteroids-4
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
+
+  # app5:
+  #   image: asteroids:latest
+  #   container_name: asteroids-5
+  #   # depends_on: 
+  #     # - syslog
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
+
+  # app6:
+  #   image: asteroids:latest
+  #   container_name: asteroids-6
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
+
+  # app7:
+  #   image: asteroids:latest
+  #   container_name: asteroids-7
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
+
+  # app8:
+  #   image: asteroids:latest
+  #   container_name: asteroids-8
+  #   build: .
+  #   environment:
+  #     - DISPLAY=${IP}:0
+  #     - QT_X11_NO_MITSHM=1
+  #   networks: 
+  #     - ether
 
 networks:
   ether:

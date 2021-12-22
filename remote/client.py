@@ -54,6 +54,8 @@ async def send(asteroid, targetList):
                        size=asteroid.size,
                        color=asteroid.color)
     for target in targetList:
+        if target not in peerDict:
+            continue
         targetIP = peerDict[target]
         async with aio.insecure_channel(f'{targetIP}:50505') as channel:
             stub = pb2g.AsteroidsStub(channel)
@@ -61,8 +63,9 @@ async def send(asteroid, targetList):
                 print(f"Send to: {targetIP}")
                 await stub.Xfer(out, timeout=1)
             except Exception:   # RpcError:
-                print(f"Peer {target} at {targetIP} lost")
-                del peerDict[target]
+                if target in peerDict:
+                    print(f"Peer {target} at {targetIP} lost")
+                    del peerDict[target]
             else:
                 break
 
